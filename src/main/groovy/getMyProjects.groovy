@@ -7,7 +7,7 @@ import static groovyx.net.http.Method.*
 import static groovyx.net.http.ContentType.*
 
 def getMyProjects( authentication ) {
-    def http = new HTTPBuilder( 'https://api.taiga.io' )
+    def http = evaluate( new File( 'getHTTPBuilder.groovy' ) )
 
     print "Getting projects..."
     http.request( GET, JSON ) { req ->

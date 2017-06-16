@@ -9,7 +9,7 @@ import static groovyx.net.http.ContentType.*
 def user = System.console().readLine( 'Username: ' )
 def pwd  = System.console().readPassword( 'Password: ' ).toString()
 
-def http = new HTTPBuilder( 'https://api.taiga.io' )
+def http = evaluate( new File( 'getHTTPBuilder.groovy' ) )
 
 print "Authenticating..."
 http.request( POST, JSON ) { req ->
