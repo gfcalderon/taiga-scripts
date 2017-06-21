@@ -8,19 +8,13 @@ import static groovyx.net.http.ContentType.*
 
 @Field final http = new HTTPBuilder( 'https://api.taiga.io' )
 
-@Field final proxyHost = ""
-@Field final proxyPort = 80
-@Field final proxyUser = ""
-@Field final proxyPwd  = ""
+if ( System.properties.'http.proxyHost' ) {
+    http.client.getCredentialsProvider().setCredentials(
+        new AuthScope( System.properties.'http.proxyHost', System.properties.'http.proxyPort'.toInteger() ),
+        new UsernamePasswordCredentials( System.properties.'http.proxyUser', System.properties.'http.proxyPassword' )
+    )
 
-// Configure fields and uncomment below lines to allow access through proxy
-/*
-http.client.getCredentialsProvider().setCredentials(
-    new AuthScope( proxyHost, proxyPort ),
-    new UsernamePasswordCredentials( proxyUser, proxyPwd )
-)
-
-http.setProxy( proxyHost, proxyPort, 'http')
-*/
+    http.setProxy( System.properties.'http.proxyHost', System.properties.'http.proxyPort'.toInteger(), 'http')
+}
 
 return http
